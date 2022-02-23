@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 time docker image build \
-  --build-arg USERNAME=${USER} \
+  --build-arg USERNAME=builduser \
   --file install_builder.dockerfile \
-  --tag mill-builder:0.1 .
+  --tag timreid/mill-builder:latest \
+  --tag timreid/mill-builder:0.3 .

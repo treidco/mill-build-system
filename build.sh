@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 docker container run \
-  --volume $(pwd)/builder/scripts:/scripts \
   --volume $1:/workdir \
   --user builduser \
-  --rm -it --name build_builder mill-builder:0.1 \
-  build $2
+  --rm -it --name build_builder timreid/mill-builder \
+  build $2 $3

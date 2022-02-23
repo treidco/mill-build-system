@@ -14,7 +14,11 @@ RUN adduser builduser \
 # Install build dependencies (Scala, Mill)
 RUN yum update -y
 
-RUN yum -y install java-1.8.0-openjdk && \
+# Install ius repo - needed to get 2.x version of git
+RUN yum -y install https://repo.ius.io/ius-release-el7.rpm \
+    https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+RUN yum -y install git224 java-1.8.0-openjdk && \
     yum -y clean all
 
 RUN \
@@ -31,8 +35,8 @@ RUN \
 
 USER builduser
 
-VOLUME /scripts
+COPY --chown=builduser scripts /home/builduser/scripts
 VOLUME /workdir
 
 # run bash script and process the input command
-ENTRYPOINT [ "/bin/bash", "/scripts/run_build.sh"]
+ENTRYPOINT [ "/bin/bash", "/home/builduser/scripts/run_build.sh"]
